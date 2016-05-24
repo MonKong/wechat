@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.1.xsd">
+
+<!-- 需要生成jobDetail，然后根据jobDetail生成trigger,再把trigger放到SchedulerFactoryBean
+
+有两种jobDetail：SchedulerFactoryBean和MethodInvokingJobDetailFactoryBean
+有两种trigger：SimpleTriggerFactoryBean和CronTriggerFactoryBean -->
+
+
+	<bean class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+		<property name="triggers">
+			<list><!-- 定时器开关 -->
+				<ref bean="accessTokenJobTrigger" />
+			</list>
+		</property>
+	</bean>
+	<bean id="accessTokenJobDetail" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+		<property name="jobClass" value="cn.template.service.job.AccessTokenJob"/>
+	</bean>
+	<bean id="accessTokenJobTrigger"
+		class="org.springframework.scheduling.quartz.SimpleTriggerFactoryBean">
+		<!-- AccessToken定时更新Job|启动执行后每小时执行一次 -->
+		<property name="jobDetail" ref="accessTokenJobDetail" />
+		<property name="startDelay" value="0" />
+		<property name="repeatInterval" value="600000" />
+	</bean>
+</beans>
+
