@@ -20,7 +20,7 @@ var FindProxyForURL = function(init, profiles) {
         if (/(?:^|\.)block\.one$/.test(host)) return "+Proxy";
         if (/(?:^|\.)1password\.com$/.test(host)) return "+Proxy";
         if (/(?:^|\.)fastly\.net$/.test(host)) return "+Proxy";
-        if (/^baidu\.com$/.test(host)) return "+Proxy";
+        if (/(?:^|\.)baidu\.com$/.test(host)) return "+Proxy";
         return "+__ruleListOf_\u81ea\u52a8\u6a21\u5f0f";
     },
     "+__ruleListOf_\u81ea\u52a8\u6a21\u5f0f": function(url, host, scheme) {
